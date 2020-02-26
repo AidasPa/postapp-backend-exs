@@ -23,8 +23,9 @@ defmodule PostApp.MixProject do
       {:ecto_sql, "~> 3.3.0"},
       {:myxql, "~> 0.3.0"},
       {:plug_cowboy, "~> 2.0"},
-      {:db_connection, "~> 2.0", override: true} # butinas del myxql, nes ecto skirtas postgres.
-
+      {:poison, "~> 3.1"},
+      # butinas del myxql, nes ecto skirtas postgres.
+      {:db_connection, "~> 2.0", override: true}
     ]
   end
 end

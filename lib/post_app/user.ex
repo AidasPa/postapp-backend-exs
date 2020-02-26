@@ -11,7 +11,7 @@ defmodule PostApp.User do
   def changeset(user, params \\ %{}) do
     user
     |> Changeset.cast(params, [:name, :username, :email])
+    |> Changeset.unique_constraint(:email)
     |> Changeset.validate_required([:name, :username, :email])
-    |> Changeset.unique_constraint([:email])
   end
 end
