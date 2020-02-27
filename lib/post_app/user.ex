@@ -12,6 +12,7 @@ defmodule PostApp.User do
     user
     |> Changeset.cast(params, [:name, :username, :email])
     |> Changeset.unique_constraint(:email)
+    |> Changeset.validate_format(:email, ~r/@/)
     |> Changeset.validate_required([:name, :username, :email])
   end
 end

@@ -1,47 +1,35 @@
-defmodule PostApp.UserHandler do
-  alias PostApp.Users
+defmodule PostApp.PostHandler do
   alias PostApp.Posts
   alias PostApp.Response
 
   def index() do
-    case Users.all() do
+    case Posts.all() do
       nil ->
         %{
           status: :error,
           err_code: 404
         }
 
-      users ->
-        %{
-          status: :ok,
-          err_code: 200,
-          resp: Poison.encode!(users)
-        }
-    end
-  end
-
-  def get_user_posts(params \\ %{}) do
-    case Posts.get_by_user(params.id) do
       posts ->
         %{
           status: :ok,
-          err_code: 200,
+          code: 200,
           resp: Poison.encode!(posts)
         }
     end
   end
 
-  def new_user(params \\ %{}) do
-    if Map.has_key?(params, "user") do
-      case Users.create(params["user"]) do
+  def new_post(params) do
+    if Map.has_key?(params, "post") do
+      case Posts.create(params["post"]) do
         :ok ->
           %{
             status: :ok,
-            code: 201,
+            code: 200,
             resp:
               Poison.encode!(%{
-                status: "ok",
-                message: "A new user has been created!"
+                message: "A new post has been created!",
+                status: "ok"
               })
           }
 
@@ -60,25 +48,25 @@ defmodule PostApp.UserHandler do
     end
   end
 
-  def get_user(params \\ %{}) do
-    case Users.get(params.id) do
+  def get_post(params \\ %{}) do
+    case Posts.get(params.id) do
       nil ->
         %{
           status: :error,
           err_code: 404
         }
 
-      user ->
+      post ->
         %{
           status: :ok,
           code: 200,
           resp:
             Poison.encode!(%{
-              user: %{
-                id: user.id,
-                name: user.name,
-                username: user.username,
-                email: user.email
+              post: %{
+                id: post.id,
+                userid: post.userid,
+                title: post.title,
+                body: post.body
               }
             })
         }

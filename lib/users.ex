@@ -5,14 +5,25 @@ defmodule PostApp.Users do
   def get(id) do
     Repo.get_by(User, id: id)
   end
+
   def all() do
-    Repo.all(User)
+    Enum.map(Repo.all(User), fn user ->
+      %{
+        id: user.id,
+        name: user.name,
+        username: user.username,
+        email: user.email
+      }
+    end)
   end
+
   def create(user \\ %{}) do
     changeset = User.changeset(%User{}, user)
+
     case Repo.insert(changeset) do
       {:error, changeset} ->
-        changeset.errors
+        {:error, changeset.errors}
+
       {:ok, _user} ->
         :ok
     end

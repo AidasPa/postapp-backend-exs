@@ -1,4 +1,18 @@
 defmodule PostApp.Response do
+  def parse_changeset(errors) do
+    Poison.encode!(%{
+      status: "error",
+      errors:
+        Enum.map(errors, fn err ->
+          err_name = err |> elem(0)
+
+          %{
+            err_name => elem(elem(err, 1), 0)
+          }
+        end)
+    })
+  end
+
   def error(code) do
     http_status_codes = %{
       100 => "Informational: Continue",
