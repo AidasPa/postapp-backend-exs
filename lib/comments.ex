@@ -21,6 +21,7 @@ defmodule PostApp.Comments do
     |> Repo.all()
     |> Enum.map(fn comment ->
       %{
+        id: comment.id,
         title: comment.title,
         body: comment.body,
         author_email: comment.author_email

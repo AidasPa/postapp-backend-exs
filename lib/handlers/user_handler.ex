@@ -25,7 +25,7 @@ defmodule PostApp.UserHandler do
       posts ->
         %{
           status: :ok,
-          err_code: 200,
+          code: 200,
           resp: Poison.encode!(posts)
         }
     end
